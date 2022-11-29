@@ -1,12 +1,13 @@
 <template>
     <ul>
-        <li v-for="(car, index) in cars">
+        <li v-for="car in cars" :key="car.id">
             <h1>{{car.brand}}</h1>
             <h1>{{car.model}}</h1>
             <h1>{{car.plate}}</h1>
             <h1>{{car.color}}</h1>
             <h1>{{car.state}}</h1>
-            <button>Eliminar</button>
+            <button @click="updateCar(car)">Editar</button>
+            <button @click="deleteCar(car)">Eliminar</button>
             <hr>
         </li>
         
@@ -24,15 +25,26 @@
         },
 
         created() {
-            axios.get('/car').then(res=>{
-                    this.cars = res.data
-                }
-            )
+            this.refresh()
         },
 
         methods: {
-            delete(){
-                
+            refresh(){
+                axios.get('/car').then(res=>{
+                        this.cars = res.data
+                    }
+                )
+            },
+            updateCar(car){
+                window.location.href = "/car/${car.id}/edit"
+            },
+            deleteCar(car){
+                if (confirm("Estas seguro que quieres eliminar ${car.brand} - ${car.model}?")) {
+                    axios.delete('car/${car.id}')
+                    .then(()=>{
+                        this.refresh()
+                    })
+                }
             }
         },
     }

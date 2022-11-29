@@ -14,7 +14,7 @@
         <br>
         <label for="cartype">Tipo de vehiculo</label>
         <select name="" id="cartype" v-model="car.cartype_id">
-            <option v-for="cartype in cartypes" :value="cartype.id">
+            <option v-for="cartype in cartypes" :key="cartype.id" :value="cartype.id">
                 {{cartype.type}}
             </option>
         </select>

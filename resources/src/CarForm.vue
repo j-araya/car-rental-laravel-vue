@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="create">
+    <form @submit.prevent="save">
         <label for="brand">Marca: </label>
         <input type="text" name="" id="brand" v-model="car.brand">
         <br>
@@ -66,22 +66,61 @@ import axios from 'axios'
                     photo3: null,
                     photo4: null,
                 },
-                cartypes: []
+                cartypes: [],
+                editing : false,
+                id: null
             }
         },
         created(){
+            // Get cartypes for the selection field 
             axios.get('/cartype').then(res =>{
                     this.cartypes = res.data
                 }
             )
+
+            // Check if is update or create 
+            var segments = window.location.pathname.split('/')
+            if (segments.length == 4) {
+                // Is Update form
+                this.editing = true
+                this.id = segments[2]
+                axios.get(`/car/${segments[2]}`)
+                .then((res)=>{
+                    this.car = res.data
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+                
+            } 
         },
         methods: {
+            save(){
+                if (this.editing) {
+                    this.update()
+                } else {
+                    this.create()
+                }
+            },
             create(){
                 console.log(this.car)
                 axios.post('/car', this.car).then((res)=>{
                     window.location.href = '/car'
                 })
+                .catch((err) => {
+                    console.log(err)
+                })
+            },
+            update(){
+                console.log(this.car)
+                axios.put(`/car/${this.id}`, this.car).then((res)=>{
+                    window.location.href = '/car'
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
             }
+
         }
     }
 </script>

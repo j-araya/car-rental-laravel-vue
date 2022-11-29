@@ -54,7 +54,7 @@ class CarController extends Controller
      */
     public function show($id)
     {
-        //
+        return Car::find($id);
     }
 
     /**
@@ -65,7 +65,7 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('carform');
     }
 
     /**
@@ -82,14 +82,16 @@ class CarController extends Controller
         $car->model = $request->model;
         $car->plate = $request->plate;
         $car->color = $request->color;
+        $car->cartype_id = $request->cartype_id;
         $car->state = $request->state;
         $car->photo1 = $request->photo1;
         $car->photo2 = $request->photo2;
         $car->photo3 = $request->photo3;
         $car->photo4 = $request->photo4;
-        $car->cartype_id = $request->cartype_id;
+
         $car->save();
-        return $car;
+
+        return response()->json("Created");
     }
 
     /**

@@ -34,15 +34,21 @@
                         this.cars = res.data
                     }
                 )
+                .catch((err) => {
+                    console.log(err)
+                })
             },
             updateCar(car){
-                window.location.href = "/car/${car.id}/edit"
+                window.location.href = `/car/${car.id}/edit`
             },
             deleteCar(car){
-                if (confirm("Estas seguro que quieres eliminar ${car.brand} - ${car.model}?")) {
-                    axios.delete('car/${car.id}')
+                if (confirm(`Estas seguro que quieres eliminar ${car.brand} - ${car.model}?`)) {
+                    axios.delete(`/car/${car.id}`)
                     .then(()=>{
                         this.refresh()
+                    })
+                    .catch((err) => {
+                        console.log(err)
                     })
                 }
             }

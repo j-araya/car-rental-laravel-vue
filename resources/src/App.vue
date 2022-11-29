@@ -1,6 +1,13 @@
 <template>
-  <h1>Funciona</h1>
+  <h1>Hola {{nombre}}</h1>
 </template>
 
-<script setup>
+<script>
+  export default {
+    data() {
+      return {
+        nombre: 'Jose'
+      }
+    }
+  }
 </script>

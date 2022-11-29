@@ -11,9 +11,16 @@
 
     </head>
     <body class="antialiased">
-        <div id="app"></div>
-
-        @vite('resources/js/app.js')
-
+        <div id="app">
+            @isset($messages)
+                <ul>
+                    @foreach ($message as $messages)
+                        <li>
+                            <h1>{{$message}}</h1>
+                        </li>
+                    @endforeach
+                </ul>
+            @endisset
+        </div>
     </body>
 </html>

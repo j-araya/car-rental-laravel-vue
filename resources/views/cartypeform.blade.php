@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Carro</title>
-</head>
-<body>
+@extends('master')
+
+@section('title', 'Formulario de Tipo de Carro')
+
+@section('content')
     <div id="app"></div>
 
     @vite('resources/js/cartypeform.js')
-</body>
-</html>
+@endsection

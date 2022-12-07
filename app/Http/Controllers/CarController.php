@@ -36,10 +36,42 @@ class CarController extends Controller
         $car->color = $request->color;
         $car->cartype_id = $request->cartype_id;
         $car->state = $request->state;
-        $car->photo1 = $request->photo1;
-        $car->photo2 = $request->photo2;
-        $car->photo3 = $request->photo3;
-        $car->photo4 = $request->photo4;
+
+        if ($request->hasFile('photo1')) {
+            
+        }
+
+        $photo1 = $request->file('photo1');
+        $photo2 = $request->file('photo2');
+        $photo3 = $request->file('photo3');
+        $photo4 = $request->file('photo4');
+
+        $name_gen1 = hexdec(uniqid());
+        $name_gen2 = hexdec(uniqid());
+        $name_gen3 = hexdec(uniqid());
+        $name_gen4 = hexdec(uniqid());
+
+        $img_ext1 = strtolower($photo1->getClientOriginalExtension());
+        $img_ext2 = strtolower($photo2->getClientOriginalExtension());
+        $img_ext3 = strtolower($photo3->getClientOriginalExtension());
+        $img_ext4 = strtolower($photo4->getClientOriginalExtension());
+
+        $img_name1 = $name_gen1.'.'.$img_ext1;
+        $img_name2 = $name_gen2.'.'.$img_ext2;
+        $img_name3 = $name_gen3.'.'.$img_ext3;
+        $img_name4 = $name_gen4.'.'.$img_ext4;
+        
+        $up_location = 'image/car/';
+
+        $photo1->move($up_location, $img_name1);
+        $photo2->move($up_location, $img_name2);
+        $photo3->move($up_location, $img_name3);
+        $photo4->move($up_location, $img_name4);
+
+        $car->photo1 = $up_location.$img_name1;
+        $car->photo2 = $up_location.$img_name2;
+        $car->photo3 = $up_location.$img_name3;
+        $car->photo4 = $up_location.$img_name4;
 
         $car->save();
 
